@@ -104,7 +104,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
       "export TFB_SERVER_HOST=${var.TFB_SERVER_HOST}",
       "export TFB_DATABASE_HOST=${var.TFB_DATABASE_HOST}",
       "export TFB_CLIENT_HOST=${var.TFB_CLIENT_HOST}",
-      "export TFB_COMMAND=${var.TFB_COMMAND}",
+      "export TFB_COMMAND='${var.TFB_COMMAND}'",
       "export TFB_RESULTS_NAME=${var.TFB_RESULTS_NAME}",
       "export TFB_RESULTS_ENVIRONMENT=${var.TFB_RESULTS_ENVIRONMENT}",
       "export TFB_UPLOAD_URI='${var.TFB_UPLOAD_URI}'",
@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
       "sudo mkdir /mnt/tfb",
       "sudo chown ${var.VM_ADMIN_USERNAME} /mnt/tfb",
       "git clone https://github.com/TechEmpower/FrameworkBenchmarks.git /mnt/tfb/FrameworkBenchmarks",
-      "git -C /mnt/tfb/FrameworkBenchmarks checkout 16414cb8956058c6e41190d64fe75b4e708e4d45",
+      "git -C /mnt/tfb/FrameworkBenchmarks checkout 12b68023e5d406680af745d34b2984741bc7c198",
       "nohup bash /home/${var.VM_ADMIN_USERNAME}/script/tfb-post-process.sh &",
       # Sleep to ensure the previous nohup command is executed
       "sleep 10",

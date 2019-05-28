@@ -6,7 +6,7 @@ set -e
 sudo docker build -t techempower/tfb /mnt/tfb/FrameworkBenchmarks
 sudo docker run \
   --network=host \
-  --mount type=bind,source=/mnt/tfb/FrameworkBenchmarks,target=/FrameworkBenchmarks "$TFB_COMMAND" \
+  --mount type=bind,source=/mnt/tfb/FrameworkBenchmarks,target=/FrameworkBenchmarks techempower/tfb \
   --server-host "$TFB_SERVER_HOST" \
   --client-host "$TFB_CLIENT_HOST" \
   --database-host "$TFB_DATABASE_HOST" \
