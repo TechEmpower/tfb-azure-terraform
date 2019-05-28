@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
       "sudo mkdir /mnt/tfb",
       "sudo chown ${var.VM_ADMIN_USERNAME} /mnt/tfb",
       "git clone https://github.com/TechEmpower/FrameworkBenchmarks.git /mnt/tfb/FrameworkBenchmarks",
-      "git -C /mnt/tfb/FrameworkBenchmarks checkout 16414cb8956058c6e41190d64fe75b4e708e4d45",
+      "git -C /mnt/tfb/FrameworkBenchmarks checkout ${var.TFB_BRANCH_OR_COMMIT}",
       "nohup bash /home/${var.VM_ADMIN_USERNAME}/script/tfb-post-process.sh &",
       # Sleep to ensure the previous nohup command is executed
       "sleep 10",

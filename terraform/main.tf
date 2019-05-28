@@ -4,6 +4,7 @@ variable "TFB_CLIENT_HOST" { default = "10.0.0.6" }
 variable "TFB_COMMAND" { default = "techempower/tfb" }
 variable "TFB_RESULTS_NAME" { default = "results" }
 variable "TFB_RESULTS_ENVIRONMENT" { default = "results_env" }
+variable "TFB_BRANCH_OR_COMMIT" { default = "master" }
 variable "TFB_UPLOAD_URI" {}
 
 variable "VM_PUBLIC_KEY" {}
