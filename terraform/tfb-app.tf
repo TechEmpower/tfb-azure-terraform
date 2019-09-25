@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "tfb-app" {
   name                    = "tfb-app-ip"
   resource_group_name     = "${azurerm_resource_group.main.name}"
   location                = "${azurerm_resource_group.main.location}"
-  allocation_method       = "Dynamic"
+  allocation_method       = "Static"
   idle_timeout_in_minutes = 30
 }
 
@@ -73,6 +73,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
 
   provisioner "file" {
     connection {
+      host        = "${azurerm_public_ip.tfb-app.ip_address}"
       type        = "ssh"
       user        = "${var.VM_ADMIN_USERNAME}"
       private_key = "${var.VM_PRIVATE_KEY}"
@@ -84,6 +85,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
 
   provisioner "remote-exec" {
     connection {
+      host        = "${azurerm_public_ip.tfb-app.ip_address}"
       type        = "ssh"
       user        = "${var.VM_ADMIN_USERNAME}"
       private_key = "${var.VM_PRIVATE_KEY}"
@@ -94,13 +96,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
       "/home/${var.VM_ADMIN_USERNAME}/script/tfb-vm-setup.sh",
       "sleep 10",
       # Set up vars
-      #"export AZURE_CLIENT_ID=${var.AZURE_CLIENT_ID}",
-      #"export AZURE_CLIENT_SECRET=${var.AZURE_CLIENT_SECRET}",
-      #"export AZURE_STORAGE_ACCOUNT_NAME=${var.AZURE_STORAGE_ACCOUNT_NAME}",
-      #"export AZURE_STORAGE_CONTAINER_NAME=${var.AZURE_STORAGE_CONTAINER_NAME}",
-      #"export AZURE_STORAGE_RESOURCE_GROUP_NAME=${var.AZURE_STORAGE_RESOURCE_GROUP_NAME}",
       "export AZURE_TEARDOWN_TRIGGER_URL='${var.AZURE_TEARDOWN_TRIGGER_URL}'",
-      #"export AZURE_TENANT_ID=${var.AZURE_TENANT_ID}",
       "export TFB_SERVER_HOST=${var.TFB_SERVER_HOST}",
       "export TFB_DATABASE_HOST=${var.TFB_DATABASE_HOST}",
       "export TFB_CLIENT_HOST=${var.TFB_CLIENT_HOST}",
@@ -112,7 +108,7 @@ resource "azurerm_virtual_machine" "tfb-app" {
       "sudo mkdir /mnt/tfb",
       "sudo chown ${var.VM_ADMIN_USERNAME} /mnt/tfb",
       "git clone https://github.com/TechEmpower/FrameworkBenchmarks.git /mnt/tfb/FrameworkBenchmarks",
-      "git -C /mnt/tfb/FrameworkBenchmarks checkout 12b68023e5d406680af745d34b2984741bc7c198",
+      "git -C /mnt/tfb/FrameworkBenchmarks checkout ${var.TFB_COMMIT_HASH}",
       "nohup bash /home/${var.VM_ADMIN_USERNAME}/script/tfb-post-process.sh &",
       # Sleep to ensure the previous nohup command is executed
       "sleep 10",
