@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "tfb-load" {
   name                    = "tfb-load-ip"
   resource_group_name     = "${azurerm_resource_group.main.name}"
   location                = "${azurerm_resource_group.main.location}"
-  allocation_method       = "Dynamic"
+  allocation_method       = "Static"
   idle_timeout_in_minutes = 30
 }
 
@@ -73,6 +73,7 @@ resource "azurerm_virtual_machine" "tfb-load" {
 
   provisioner "file" {
     connection {
+      host        = "${azurerm_public_ip.tfb-load.ip_address}"
       type        = "ssh"
       user        = "${var.VM_ADMIN_USERNAME}"
       private_key = "${var.VM_PRIVATE_KEY}"
@@ -84,6 +85,7 @@ resource "azurerm_virtual_machine" "tfb-load" {
 
   provisioner "remote-exec" {
     connection {
+      host        = "${azurerm_public_ip.tfb-load.ip_address}"
       type        = "ssh"
       user        = "${var.VM_ADMIN_USERNAME}"
       private_key = "${var.VM_PRIVATE_KEY}"

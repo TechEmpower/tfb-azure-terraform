@@ -4,8 +4,8 @@ variable "TFB_CLIENT_HOST" { default = "10.0.0.6" }
 variable "TFB_COMMAND" { default = "techempower/tfb" }
 variable "TFB_RESULTS_NAME" { default = "results" }
 variable "TFB_RESULTS_ENVIRONMENT" { default = "results_env" }
-variable "TFB_BRANCH_OR_COMMIT" { default = "master" }
 variable "TFB_UPLOAD_URI" {}
+variable "TFB_COMMIT_HASH" { default = "" }
 
 variable "VM_PUBLIC_KEY" {}
 variable "VM_PRIVATE_KEY" { default = "to be set" }
@@ -21,13 +21,13 @@ variable "AZURE_TEARDOWN_TRIGGER_URL" {}
 variable "AZURE_TENANT_ID" {}
 
 terraform {
-  required_version = ">= 0.11"
+  required_version = ">= 0.12.6"
 
   backend "azurerm" {}
 }
 
 provider "azurerm" {
-  version = "=1.21.0"
+  version = "=1.28.0"
 }
 
 # Create a resource group
