@@ -2,6 +2,13 @@
 
 set -e
 
+# Citrine's latest commit
+if [ "$TFB_USE_LATEST_CITRINE_COMMIT" = true ]; then
+  TFB_COMMIT_HASH=$(curl https://tfb-status.techempower.com/last-seen-commit?environment=Citrine)
+  echo "Using Citrine's commit $TFB_COMMIT_HASH"
+fi
+git -C /mnt/tfb/FrameworkBenchmarks checkout $TFB_COMMIT_HASH
+
 # TFB
 sudo docker build -t techempower/tfb /mnt/tfb/FrameworkBenchmarks
 sudo docker run \

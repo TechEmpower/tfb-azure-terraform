@@ -6,6 +6,7 @@ variable "TFB_RESULTS_NAME" { default = "results" }
 variable "TFB_RESULTS_ENVIRONMENT" { default = "results_env" }
 variable "TFB_UPLOAD_URI" {}
 variable "TFB_COMMIT_HASH" { default = "" }
+variable "TFB_USE_LATEST_CITRINE_COMMIT" { default = "true" }
 
 variable "VM_PUBLIC_KEY" {}
 variable "VM_PRIVATE_KEY" { default = "to be set" }
