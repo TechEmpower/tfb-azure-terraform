@@ -51,7 +51,7 @@ resource "azurerm_virtual_machine" "tfb-data" {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "16.04-LTS"
-    version   = "latest"
+    version   = "16.04.202004070"
   }
   storage_os_disk {
     name              = "tfb-data-osdisk1"
